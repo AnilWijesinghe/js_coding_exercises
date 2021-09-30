@@ -41,17 +41,7 @@ function getSalePrice(originalPrice, reduction) {
     salePrice = originalPrice;
   }
 
-  let price = (salePrice - Math.floor(salePrice)) !== 0;
-
-  if(price){
-    const salePriceStr = String(salePrice);
-    const decimalPlacesCount = salePriceStr.split('.')[1].length
-    if(decimalPlacesCount>2){
-      salePrice = salePrice.toFixed(2);
-    }
-  }
-
-  return parseFloat(salePrice);
+  return getValueFromTwoDecimalPlaces(salePrice);
 }
 
 function getMiddleCharacter(str) {
@@ -76,22 +66,58 @@ function reverseWord(word) {
 
 function reverseAllWords(words) {
   if (words === undefined) throw new Error("words is required");
-  // Add your code here!
+  const reverseWords = new Array(words.length);
+  for(let i=0;i<words.length;i++){
+    reverseWords[i] = reverseWord(words[i].toString());
+  }
+  return reverseWords;
 }
 
 function countLinuxUsers(users) {
   if (users === undefined) throw new Error("users is required");
-  // Add your code here!
+  let count = 0;
+  for(let i=0;i<users.length;i++){
+    if(String(users[i].type)=='Linux'){
+      count++;
+    }
+  }
+  return count;
 }
 
 function getMeanScore(scores) {
   if (scores === undefined) throw new Error("scores is required");
-  // Add your code here!
+  let sumOfScores = 0;
+  let noOfScores = scores.length;
+  for(let i=0;i<scores.length;i++){
+    sumOfScores = sumOfScores + scores[i];
+  }
+  let meanScore = sumOfScores/noOfScores;
+  return getValueFromTwoDecimalPlaces(meanScore);
 }
 
 function simpleFizzBuzz(n) {
   if (n === undefined) throw new Error("n is required");
-  // Add your code here!
+  if(n%3==0 && n%5==0){
+    return 'fizzbuzz';
+  }else if(n%3==0){
+    return 'fizz';
+  }else if(n%5==0){
+    return 'buzz';
+  }else{
+    return n;
+  }
+}
+
+function getValueFromTwoDecimalPlaces(value){
+  let status = (value - Math.floor(value)) !== 0;
+  if(status){
+    const strValue = String(value);
+    const decimalPlacesCount = strValue.split('.')[1].length
+    if(decimalPlacesCount>2){
+      value = value.toFixed(2);
+    }
+  }
+  return parseFloat(value);
 }
 
 module.exports = {
