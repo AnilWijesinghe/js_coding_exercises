@@ -4,6 +4,9 @@
  */
 const sumDigits = n => {
   if (n === undefined) throw new Error("n is required");
+  if (!Number.isInteger(n) || n<0) throw new Error("Positive number is required");
+  let numberInArray = n.toString().split('');
+  return numberInArray.map(e=>parseInt(e)).reduce((a,b)=>a+b);
 };
 
 /**
@@ -15,8 +18,16 @@ const sumDigits = n => {
  * @param {Number} step
  */
 const createRange = (start, end, step) => {
-  if (start === undefined) throw new Error("start is required");
-  if (end === undefined) throw new Error("end is required");
+  if (start === undefined || !Number.isInteger(start) || start<0) throw new Error("start is required and should be positive integer");
+  if (end === undefined || !Number.isInteger(end) || end<0) throw new Error("end is required and should be positive integer");
+  if ((step !== undefined && !Number.isInteger(step)) || (step !== undefined && step<0)) throw new Error("if step passing, it is required and should be positive integer");
+  if(step===null || step === undefined)
+    step =1;
+  let rangeArray = [];
+  for(let i=start;i<=end;i=i+step){
+    rangeArray.push(i);
+  }
+  return rangeArray;
 };
 
 /**
