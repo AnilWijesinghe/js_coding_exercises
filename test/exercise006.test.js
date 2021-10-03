@@ -1,6 +1,7 @@
 const {
     sumMultiples,
     isValidDNA,
+    getComplementaryDNA,
     isItPrime,
     createMatrix
 } = require("../challenges/exercise006");
@@ -42,7 +43,7 @@ describe("isValidDNA", () => {
     });
 
     test("return true, string may contain valid DNA characters", () => {
-        expect(isValidDNA('COGRITA')).toBe(true);
+        expect(isValidDNA('ACTG')).toBe(true);
     });
 
     test("return false, string may contain valid DNA characters", () => {
@@ -50,7 +51,35 @@ describe("isValidDNA", () => {
     });
 
     test("return true, string ignores case sensitive", () => {
-        expect(isValidDNA('CoGrIta')).toBe(true);
+        expect(isValidDNA('AcTg')).toBe(true);
+    });
+});
+
+
+describe("getComplementaryDNA", () => {
+    test("throws an error if not pass a parameter", () => {
+        expect(()=>{
+            getComplementaryDNA();
+        }).toThrow('str is required');
+
+        expect(()=>{
+            getComplementaryDNA(5);
+        }).toThrow('str is required');
+
+    });
+
+    test("return complementary DNA", () => {
+        expect(getComplementaryDNA('ACTG')).toBe('TGAC');
+    });
+
+    test("return complementary DNA ignore case", () => {
+        expect(()=>{
+            getComplementaryDNA('COGRIT');
+        }).toThrow('Not a valid DNA String');
+    });
+
+    test("return true, string ignores case sensitive", () => {
+        expect(getComplementaryDNA('AcTg')).toBe('TGAC');
     });
 });
 

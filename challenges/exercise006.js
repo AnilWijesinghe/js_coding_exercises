@@ -26,11 +26,12 @@ const isValidDNA = str => {
   if (str === undefined) throw new Error("String is required");
   const dnaString = ['C','G','T','A'];
   let isValidDna = true;
-  dnaString.forEach(char=>{
-    if(!str.toUpperCase().includes(char)){
+  for(let i=0;i<str.length;i++){
+    if(!dnaString.includes(str[i].toUpperCase())){
       isValidDna = false;
+      break;
     }
-  });
+  }
   return isValidDna;
 };
 
@@ -40,7 +41,22 @@ const isValidDNA = str => {
  * @returns {String}
  */
 const getComplementaryDNA = str => {
-  if (str === undefined) throw new Error("str is required");
+  if (str === undefined || typeof str !== 'string') throw new Error("str is required");
+  const pair = {"A": "T","T": "A","G": "C","C": "G"}
+  const dnaString = ['C','G','T','A'];
+  let word = '';
+  for(let i=0;i<str.length;i++){
+    if(!dnaString.includes(str[i].toUpperCase())){
+      throw new Error("Not a valid DNA String");
+    }else{
+      console.log(str.charAt(i));
+      console.log(pair[str.charAt(i).toUpperCase()]);
+      word = word.concat(pair[str.charAt(i).toUpperCase()]);
+      //str = str.replace(str.charAt(i),pair[str.charAt(i).toUpperCase()]);
+      console.log(str);
+    }
+  }
+  return word;
 };
 
 /**
