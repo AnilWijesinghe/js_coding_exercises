@@ -104,6 +104,14 @@ const createMatrix = (n, fill) => {
 const areWeCovered = (staff, day) => {
   if (staff === undefined) throw new Error("staff is required");
   if (day === undefined) throw new Error("day is required");
+  if (staff.length===0)
+    return false;
+  let allocateUsers = [];
+  staff.forEach(member=>{
+    if(member.rota.includes(day))
+      allocateUsers.push(member);
+  });
+  return allocateUsers.length >= 3;
 };
 
 module.exports = {

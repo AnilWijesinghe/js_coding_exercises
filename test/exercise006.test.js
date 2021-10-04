@@ -3,7 +3,8 @@ const {
     isValidDNA,
     getComplementaryDNA,
     isItPrime,
-    createMatrix
+    createMatrix,
+    areWeCovered
 } = require("../challenges/exercise006");
 
 describe("sumMultiples", () => {
@@ -150,6 +151,66 @@ describe("createMatrix", () => {
     test("create matrix given number and filling word", () => {
         expect(createMatrix(3,'foo')).toStrictEqual([["foo", "foo", "foo"],["foo", "foo", "foo"],["foo", "foo", "foo"]]);
     });
+
+});
+
+describe("areWeCovered", () => {
+
+    test("throws an error if not staff", () => {
+        expect(()=>{
+            areWeCovered();
+        }).toThrow('staff is required');
+    });
+
+    test("throws an error if day is not defined", () => {
+        expect(()=>{
+            areWeCovered([
+                { name: "Sally", rota: ["Monday", "Tuesday", "Friday"] },
+                { name: "Pedro", rota: ["Saturday", "Sunday", "Tuesday", "Wednesday"] }
+            ]);
+        }).toThrow('day is required');
+    });
+
+    test("return false in not staff at all", () => {
+        expect(areWeCovered([],'Sunday')).toBe(false);
+        expect(areWeCovered([],'Monday')).toBe(false);
+        expect(areWeCovered([],'Tuesday')).toBe(false);
+        expect(areWeCovered([],'Wednesday')).toBe(false);
+        expect(areWeCovered([],'Thursday')).toBe(false);
+        expect(areWeCovered([],'Friday')).toBe(false);
+        expect(areWeCovered([],'Saturday')).toBe(false);
+    });
+
+    test("return false when scheduled staff less than 3 per day", () => {
+        expect(areWeCovered([
+            { name: "Anil", rota: ["Monday", "Tuesday", "Sunday"] },
+            { name: "Amali", rota: ["Monday", "Wednesday", "Friday"] },
+            { name: "Sahan", rota: ["Monday", "Tuesday", "Friday", "Sunday"] },
+            { name: "Indu", rota: ["Monday", "Sunday", "Friday", "Wednesday"] }
+        ],'Tuesday')).toBe(false);
+        expect(areWeCovered([
+            { name: "Anil", rota: ["Monday", "Tuesday", "Friday"] },
+            { name: "Amali", rota: ["Monday", "Wednesday", "Friday"] },
+            { name: "Sahan", rota: ["Monday", "Tuesday", "Friday", "Sunday"] },
+            { name: "Indu", rota: ["Monday", "Sunday", "Friday", "Wednesday"] }
+        ],'Wednesday')).toBe(false);
+    });
+
+    test("return true when scheduled staff more than 3 or equal per day", () => {
+        expect(areWeCovered([
+            { name: "Anil", rota: ["Monday", "Tuesday", "Sunday"] },
+            { name: "Amali", rota: ["Monday", "Wednesday", "Friday"] },
+            { name: "Sahan", rota: ["Monday", "Tuesday", "Friday", "Sunday"] },
+            { name: "Indu", rota: ["Monday", "Sunday", "Friday", "Wednesday"] }
+        ],'Monday')).toBe(true);
+        expect(areWeCovered([
+            { name: "Anil", rota: ["Monday", "Tuesday", "Friday"] },
+            { name: "Amali", rota: ["Monday", "Wednesday", "Friday"] },
+            { name: "Sahan", rota: ["Monday", "Tuesday", "Friday", "Sunday"] },
+            { name: "Indu", rota: ["Monday", "Sunday", "Friday", "Wednesday"] }
+        ],'Friday')).toBe(true);
+    });
+
 
 });
 
