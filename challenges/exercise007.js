@@ -62,6 +62,17 @@ const createRange = (start, end, step) => {
 const getScreentimeAlertList = (users, date) => {
   if (users === undefined) throw new Error("users is required");
   if (date === undefined) throw new Error("date is required");
+  if (users.length == 0) throw new Error("users is empty");
+  let userNameArray = [];
+  users.forEach(user => {
+    let screenTime = user.screenTime;
+    screenTime.forEach(screenTime=>{
+      if(screenTime.date===date && Object.values(screenTime.usage).reduce((a, b) => a + b, 0)>100){
+          userNameArray.push(user.username);
+      }
+    });
+  });
+  return userNameArray;
 };
 
 /**
@@ -76,6 +87,14 @@ const getScreentimeAlertList = (users, date) => {
  */
 const hexToRGB = hexStr => {
   if (hexStr === undefined) throw new Error("hexStr is required");
+
+  let validHexStr = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexStr);
+  if(!validHexStr) throw new Error("Invalid input");
+
+  let rgbStr = 'rgb'.concat('(',parseInt(validHexStr[1], 16).toString(),',',
+      parseInt(validHexStr[2], 16).toString(),',',parseInt(validHexStr[3], 16).toString(),')');
+
+  return rgbStr;
 };
 
 /**
@@ -90,6 +109,31 @@ const hexToRGB = hexStr => {
  */
 const findWinner = board => {
   if (board === undefined) throw new Error("board is required");
+
+  for(let i=0; i<3; i++){
+      if(board[i][0] == null){
+        continue;
+      }else if(board[i][0] == board[i][1] && board[i][1] == board[i][2]){
+        return board[i][0];
+      }
+  }
+
+  for(let j=0; j<3; j++){
+    if(board[0][j] == null){
+      continue;
+    }else if(board[0][j] == board[1][j] && board[1][j] == board[2][j]){
+      return board[0][j];
+    }
+  }
+
+  if(board[0][0] != null && board[0][0] == board[1][1] && board[0][0] == board[2][2]){
+    return board[0][0];
+  }
+
+  if(board[0][2] != null && board[0][2] == board[1][1] && board[0][2] == board[2][0]){
+    return board[0][2];
+  }
+  return null;
 };
 
 module.exports = {
