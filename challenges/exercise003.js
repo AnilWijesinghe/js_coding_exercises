@@ -1,21 +1,14 @@
 function getSquares(nums) {
   if (nums === undefined) throw new Error("nums is required");
-  const squareArray = [];
-  for(let i=0;i<nums.length;i++){
-    squareArray[i] = Math.pow(nums[i],2);
-  }
-  return squareArray;
+  return nums.map(number=>Math.pow(number,2));
 }
 
 function camelCaseWords(words) {
   if (words === undefined) throw new Error("words is required");
   let word = '';
   for(let i=0;i<words.length;i++){
-    if(i!=0){
-      word = word.concat(words[i].charAt(0).toUpperCase(),words[i].slice(1));
-    }else{
-      word = words[0];
-    }
+    if(i!=0) word = word.concat(words[i].charAt(0).toUpperCase(),words[i].slice(1));
+    else word = words[0];
   }
   return word;
 }
@@ -47,9 +40,7 @@ function duplicateNumbers(arr1, arr2) {
   if (arr2 === undefined) throw new Error("arr2 is required");
   let duplicateArray = [];
   for(let i=0;i<arr1.length;i++){
-    if(arr2.includes(arr1[i]) && !duplicateArray.includes(arr1[i])){
-      duplicateArray.push(arr1[i]);
-    }
+    if(arr2.includes(arr1[i]) && !duplicateArray.includes(arr1[i])) duplicateArray.push(arr1[i]);
   }
   return duplicateArray.sort(function(a, b){return a-b});
 }

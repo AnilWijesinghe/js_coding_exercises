@@ -63,11 +63,8 @@ const getWordFrequencies = str => {
   const wordFreqArray = {};
   for(let i=0;i<array.length;i++){
     let word = array[i].replace(/[^\w\s]|_/g, '').toLowerCase()
-    if(wordFreqArray[word]==undefined){
-      wordFreqArray[word] =1;
-    }else{
-      wordFreqArray[word] +=1
-    }
+    if(wordFreqArray[word]==undefined) wordFreqArray[word] =1;
+    else wordFreqArray[word] +=1
   }
   return wordFreqArray;
 };

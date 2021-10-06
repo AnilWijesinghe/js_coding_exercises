@@ -46,15 +46,8 @@ const getComplementaryDNA = str => {
   const dnaString = ['C','G','T','A'];
   let word = '';
   for(let i=0;i<str.length;i++){
-    if(!dnaString.includes(str[i].toUpperCase())){
-      throw new Error("Not a valid DNA String");
-    }else{
-      console.log(str.charAt(i));
-      console.log(pair[str.charAt(i).toUpperCase()]);
-      word = word.concat(pair[str.charAt(i).toUpperCase()]);
-      //str = str.replace(str.charAt(i),pair[str.charAt(i).toUpperCase()]);
-      console.log(str);
-    }
+    if(!dnaString.includes(str[i].toUpperCase())) throw new Error("Not a valid DNA String");
+    else word = word.concat(pair[str.charAt(i).toUpperCase()]);
   }
   return word;
 };
