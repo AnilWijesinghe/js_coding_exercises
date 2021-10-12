@@ -11,6 +11,7 @@ const {
   simpleFizzBuzz
 } = require("../challenges/exercise001");
 
+
 describe("capitalize", () => {
   test("returns a capitalized string", () => {
     expect(capitalize("hello")).toBe("Hello");
